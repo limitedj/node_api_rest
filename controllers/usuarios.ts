@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import Usuario from '../models/usuario';
-
-
+import bcryptjs from 'bcryptjs';
 
 //Obtener todos los Usuarios
-
-
 
 export const getUsuarios = async (req: Request, res: Response) => {
     const usuarios = await Usuario.findAll();
@@ -40,19 +37,21 @@ export const getUsuario = async (req: Request, res: Response) => {
 
 export const loginUsuario = (req: Request, res: Response) => {
 
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            error: error.mapped()
-        })
-    }
+    // const error = validationResult(req);
+    // if (!error.isEmpty()) {
+    //     return res.status(400).json({
+    //         ok: false,
+    //         error: error.mapped()
+    //     })
+    // }
 
 };
 
 // Crear Usuarios
 
 export const crearUsuario = async (req: Request, res: Response) => {
+
+    
 
     const error = validationResult(req);
     if (!error.isEmpty()) {
@@ -64,6 +63,8 @@ export const crearUsuario = async (req: Request, res: Response) => {
 
     
     const { body }  = req;
+
+    const {password} = body;
 
     try {
         const existeEmail = await Usuario.findOne({
@@ -78,8 +79,12 @@ export const crearUsuario = async (req: Request, res: Response) => {
             });
         }
 
-         const usuario = await Usuario.create(body);
-         await usuario.save();
+        const salt = bcryptjs.genSaltSync();
+        body.password = bcryptjs.hashSync(password, salt);
+
+        const usuario = await Usuario.create(body);
+        
+        await usuario.save();
 
          res.json(usuario);
          
@@ -88,8 +93,6 @@ export const crearUsuario = async (req: Request, res: Response) => {
         res.status(500).json({
            
             msg: 'Hable con el administrador Miguel Angel'
-            
-            
         })
     }
 };

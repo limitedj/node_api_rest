@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUsuario = exports.putUsuario = exports.crearUsuario = exports.loginUsuario = exports.getUsuario = exports.getUsuarios = void 0;
 const express_validator_1 = require("express-validator");
 const usuario_1 = __importDefault(require("../models/usuario"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 //Obtener todos los Usuarios
 const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usuarios = yield usuario_1.default.findAll();
@@ -38,13 +39,13 @@ const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getUsuario = getUsuario;
 //login de usuarios
 const loginUsuario = (req, res) => {
-    const error = express_validator_1.validationResult(req);
-    if (!error.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            error: error.mapped()
-        });
-    }
+    // const error = validationResult(req);
+    // if (!error.isEmpty()) {
+    //     return res.status(400).json({
+    //         ok: false,
+    //         error: error.mapped()
+    //     })
+    // }
 };
 exports.loginUsuario = loginUsuario;
 // Crear Usuarios
@@ -58,6 +59,7 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     ;
     const { body } = req;
+    const { password } = body;
     try {
         const existeEmail = yield usuario_1.default.findOne({
             where: {
@@ -69,7 +71,8 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 msg: 'Ya existe el usuario con el email ' + body.email
             });
         }
-        console.log(req);
+        const salt = bcryptjs_1.default.genSaltSync();
+        body.password = bcryptjs_1.default.hashSync(password, salt);
         const usuario = yield usuario_1.default.create(body);
         yield usuario.save();
         res.json(usuario);
