@@ -1,4 +1,4 @@
-import Role from '../models/roles';
+import Role from '../models/role';
 import Usuario from '../models/usuario';
 
 export const esRolValido = async(rol = '')=>{
@@ -8,23 +8,13 @@ export const esRolValido = async(rol = '')=>{
     }
 };
 
-export const esEmailValido = async(email = '')=>{
+
+export const existeEmail = async(email:String = '')=>{
     const existeEmail = await Usuario.findOne({ email });
     if(existeEmail){
         throw new Error(`El email ${email} ya esta registrado en la base de datos`);
     }
 };
 
- // const existeEmail = await Usuario.findOne({
-        //     where: {
-        //         email: body.email
-        //     }
-        // });
-
-        // if (existeEmail) {
-        //     return res.status(400).json({
-        //         msg: 'Ya existe el usuario con el email ' + body.email
-        //     });
-        // }
 
 

@@ -1,35 +1,35 @@
-import { DataTypes } from 'sequelize';
+import { DataType } from 'sequelize-typescript';
 import db from '../db/connection';
 
 //Modelo de Usuarios
 
 const Usuario = db.define( 'usuario' , {
     nombre: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         unique: true,
         allowNull: false
     },
     password: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false
     },
     imagen: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
     },
     rol: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false
     },
     estado: {
-        type: DataTypes.BOOLEAN,
+        type: DataType.BOOLEAN,
         defaultValue: true
     },
     google: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: true
     }
 });

@@ -1,8 +1,11 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { check } from 'express-validator';
 import { getUsuario, getUsuarios, crearUsuario, putUsuario, deleteUsuario, loginUsuario } from '../controllers/usuarios';
 import { validarCampos } from '../middlewares/validar_campos';
-import Role from '../models/roles';
+import Role from '../models/role';
+
+
+
 const router = Router();
 
 router.get('/',       getUsuarios);

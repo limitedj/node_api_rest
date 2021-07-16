@@ -61,16 +61,16 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { body } = req;
     const { password } = body;
     try {
-        const existeEmail = yield usuario_1.default.findOne({
-            where: {
-                email: body.email
-            }
-        });
-        if (existeEmail) {
-            return res.status(400).json({
-                msg: 'Ya existe el usuario con el email ' + body.email
-            });
-        }
+        // const existeEmail = await Usuario.findOne({
+        //     where: {
+        //         email: body.email
+        //     }
+        // });
+        // if (existeEmail) {
+        //     return res.status(400).json({
+        //         msg: 'Ya existe el usuario con el email ' + body.email
+        //     });
+        // }
         const salt = bcryptjs_1.default.genSaltSync();
         body.password = bcryptjs_1.default.hashSync(password, salt);
         const usuario = yield usuario_1.default.create(body);

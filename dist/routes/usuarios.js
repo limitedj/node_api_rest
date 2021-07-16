@@ -15,11 +15,11 @@ router.post('/auth', [
 ], usuarios_1.loginUsuario);
 router.post('/crear', [
     express_validator_1.check('nombre', 'El nombre es obligatorio').notEmpty(),
-    express_validator_1.check('email', 'El email es obligatorio').normalizeEmail().isEmail().notEmpty(),
+    //    check('email','El email es obligatorio').normalizeEmail().isEmail().notEmpty(),
     express_validator_1.check('password', 'El password es obligatorio').notEmpty(),
     express_validator_1.check('password', 'El password debe tener mas de 6 digitos').isLength({ min: 6 }),
-    express_validator_1.check('rol').custom(db_validators_1.esRolValido),
-    express_validator_1.check('email').custom(db_validators_1.esEmailValido),
+    express_validator_1.check('rol').notEmpty().custom(db_validators_1.esRolValido),
+    express_validator_1.check('email').notEmpty().custom(db_validators_1.existeEmail).isEmail(),
     validar_campos_1.validarCampos,
 ], usuarios_1.crearUsuario);
 router.put('/:id', usuarios_1.putUsuario);

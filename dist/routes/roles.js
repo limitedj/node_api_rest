@@ -16,7 +16,7 @@ const express_1 = require("express");
 const express_validator_1 = require("express-validator");
 const usuarios_1 = require("../controllers/usuarios");
 const validar_campos_1 = require("../middlewares/validar_campos");
-const roles_1 = __importDefault(require("../models/roles"));
+const role_1 = __importDefault(require("../models/role"));
 const router = express_1.Router();
 router.get('/', usuarios_1.getUsuarios);
 router.get('/:id', usuarios_1.getUsuario);
@@ -31,7 +31,7 @@ router.post('/crear', [
     express_validator_1.check('password', 'El password es obligatorio').notEmpty(),
     express_validator_1.check('password', 'El password debe tener mas de 6 digitos').isLength({ min: 6 }),
     express_validator_1.check('id').custom((id = '') => __awaiter(void 0, void 0, void 0, function* () {
-        const existeRol = yield roles_1.default.findByPk(id);
+        const existeRol = yield role_1.default.findByPk(id);
         if (!existeRol) {
             throw new Error(`El rol ${id} no está registrado en la BD`);
         }

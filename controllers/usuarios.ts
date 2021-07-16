@@ -67,17 +67,17 @@ export const crearUsuario = async (req: Request, res: Response) => {
     const {password} = body;
 
     try {
-        const existeEmail = await Usuario.findOne({
-            where: {
-                email: body.email
-            }
-        });
+        // const existeEmail = await Usuario.findOne({
+        //     where: {
+        //         email: body.email
+        //     }
+        // });
 
-        if (existeEmail) {
-            return res.status(400).json({
-                msg: 'Ya existe el usuario con el email ' + body.email
-            });
-        }
+        // if (existeEmail) {
+        //     return res.status(400).json({
+        //         msg: 'Ya existe el usuario con el email ' + body.email
+        //     });
+        // }
 
         const salt = bcryptjs.genSaltSync();
         body.password = bcryptjs.hashSync(password, salt);
