@@ -16,14 +16,14 @@ exports.existeEmail = exports.esRolValido = void 0;
 const role_1 = __importDefault(require("../models/role"));
 const usuario_1 = __importDefault(require("../models/usuario"));
 const esRolValido = (rol = '') => __awaiter(void 0, void 0, void 0, function* () {
-    const existeRol = yield role_1.default.findOne({ rol });
+    const existeRol = yield role_1.default.findOne({ where: { codigo: 'rol' } });
     if (!existeRol) {
         throw new Error(`El rol ${rol} no está registrado en la BD`);
     }
 });
 exports.esRolValido = esRolValido;
 const existeEmail = (email = '') => __awaiter(void 0, void 0, void 0, function* () {
-    const existeEmail = yield usuario_1.default.findOne({ email });
+    const existeEmail = yield usuario_1.default.findOne({ where: { mail: 'mail' } });
     if (existeEmail) {
         throw new Error(`El email ${email} ya esta registrado en la base de datos`);
     }

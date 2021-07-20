@@ -1,10 +1,10 @@
-import { DataType } from 'sequelize-typescript'
-';
+import { DataTypes } from 'sequelize';
 import db from '../db/connection';
+
 
 //Modelo de Roles
 
-const Role = db.addModels( 'role' , {
+const Role = db.define( 'role' , {
     codigo: {
         type: DataTypes.STRING,
         allowNull: false,
