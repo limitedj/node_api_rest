@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validarCampos = void 0;
 const express_validator_1 = require("express-validator");
 const validarCampos = (req, res, next) => {
-    const error = express_validator_1.validationResult(req);
-    if (!error.isEmpty()) {
+    const err = express_validator_1.validationResult(req);
+    if (!err.isEmpty()) {
         return res.status(400).json({
             ok: false,
-            error: error.mapped()
+            // msg: JSON.stringify(error.mapped()),
+            error: err.mapped(),
+            // msg: error.mapped(),
+            body: req.body
         });
     }
     next();

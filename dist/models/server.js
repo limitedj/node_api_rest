@@ -14,15 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usuarios_1 = __importDefault(require("../routes/usuarios"));
+const auth_1 = __importDefault(require("../routes/auth"));
 const cors_1 = __importDefault(require("cors"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
         this.apiPaths = {
+            auth: "/api/auth",
             usuarios: '/api/usuarios'
         };
         this.app = express_1.default();
-        this.port = process.env.PORT || '8000';
+        this.port = process.env.PORT;
         //Metodos Iniciales
         this.dbConnection();
         this.middlewares();
@@ -44,15 +46,17 @@ class Server {
         this.app.use(cors_1.default());
         //LECTURA DEL BODY
         this.app.use(express_1.default.json());
+        this.app.use(express_1.default.urlencoded({ extended: false }));
         //CARPETA PUBLICA
         this.app.use(express_1.default.static('public'));
     }
     routes() {
-        this.app.use(this.apiPaths.usuarios, usuarios_1.default);
+        this.app.use(this.apiPaths.auth, auth_1.default),
+            this.app.use(this.apiPaths.usuarios, usuarios_1.default);
     }
     listen() {
         this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en el puerto' + this.port);
+            console.log('Servidor corriendo en el puerto' + ' ' + this.port);
         });
     }
 }
