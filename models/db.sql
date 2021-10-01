@@ -16,7 +16,7 @@ WITH (oids = false);
 --
 CREATE TABLE public.menus (
     id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
-    nombre character varying NOT NULL,
+    codigo character varying NOT NULL,
     menu_id integer,
     url character varying,
     "createdAt" timestamp without time zone,

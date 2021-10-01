@@ -8,7 +8,7 @@ interface RolInstance extends Model {
 }
 //Modelo de Roles
 
-const Role = db.define<RolInstance>( 'roles' , {
+const Rol = db.define<RolInstance>( 'roles' , {
     id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -24,11 +24,6 @@ const Role = db.define<RolInstance>( 'roles' , {
         type: DataTypes.STRING,
         allowNull: true
     },
-    id_menu: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    }
 },
 {
 // timestamps : false,
@@ -37,4 +32,4 @@ tableName : 'roles',
 }
 );
 
-export default Role;
+export default Rol;

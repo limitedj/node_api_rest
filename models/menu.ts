@@ -1,8 +1,3 @@
-// id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
-// nombre character varying NOT NULL,
-// menu_id integer,
-// url character varying,
-
 import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
 
