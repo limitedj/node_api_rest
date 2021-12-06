@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { header, validationResult } from 'express-validator';
 import Usuario from '../models/usuario';
 import bcryptjs from 'bcryptjs';
-import { AuthResponse } from '../interfaces/borrame_interfaces';
-
+import Rol from '../models/rol';
+require("../models/asociaciones")
 
 //Obtener todos los Usuarios paginados
 
@@ -24,12 +23,11 @@ export const getUsuariosPag = async (req: Request, res: Response) => {
     res.json({ usuarios });
 };
 
-
 //Obtener todos los Usuarios
 
 export const getUsuarios = async (req: Request, res: Response) => {
 
-    const usuarios = await Usuario.findAll();
+    const usuarios = await Usuario.findAll({include:Rol});
 
     res.json({ usuarios });
 
@@ -41,7 +39,7 @@ export const getUsuario = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const usuario = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(id /*, {include:[Rol]}*/);
     
     if (usuario) {
         res.json({ usuario });
@@ -56,6 +54,8 @@ export const getUsuario = async (req: Request, res: Response) => {
 
 export const crearUsuario = async (req: Request, res: Response) => {
 
+    
+
     // const error = validationResult(req);
     // if (!error.isEmpty()) {
     //     return res.status(400).json({
@@ -65,7 +65,7 @@ export const crearUsuario = async (req: Request, res: Response) => {
     // };
 
     
-    const { body, headers }  = req;
+    const { body }  = req;
 
     const token = req.header( 'x-token' ) || '' ;
     
@@ -89,6 +89,31 @@ export const crearUsuario = async (req: Request, res: Response) => {
         body.password = bcryptjs.hashSync(password, salt);
 
         const usuario = await Usuario.create(body);
+        
+
+
+        // await usuario.addRols([Rol,body.rol]);
+        
+        
+        
+        
+        // .then(body.rol => {        });
+
+        
+        // const usuario = await Usuario.create({
+        //     nombre: body.nombre,
+        //     apellido: body.apellido,
+        //     email: body.email,
+        //     password: body.password,
+        //     imagen: body.imagen,
+        //     estado: body.estado,
+        //     google: body.google,
+        //     rol:{
+        //         id:body.rol,
+        //     },
+        //     {include: "Rol_menu"}
+
+        // });
         
         await usuario.save();
 

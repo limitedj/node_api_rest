@@ -26,6 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUsuario = exports.putUsuario = exports.crearUsuario = exports.getUsuario = exports.getUsuarios = exports.getUsuariosPag = void 0;
 const usuario_1 = __importDefault(require("../models/usuario"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const rol_1 = __importDefault(require("../models/rol"));
+require("../models/asociaciones");
 //Obtener todos los Usuarios paginados
 const getUsuariosPag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { limite = 5, desde = 5 } = req.query;
@@ -43,14 +45,14 @@ const getUsuariosPag = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.getUsuariosPag = getUsuariosPag;
 //Obtener todos los Usuarios
 const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usuarios = yield usuario_1.default.findAll();
+    const usuarios = yield usuario_1.default.findAll({ include: rol_1.default });
     res.json({ usuarios });
 });
 exports.getUsuarios = getUsuarios;
 //Obtener un usuario por id
 const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const usuario = yield usuario_1.default.findByPk(id);
+    const usuario = yield usuario_1.default.findByPk(id /*, {include:[Rol]}*/);
     if (usuario) {
         res.json({ usuario });
     }
@@ -70,7 +72,7 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     //         error: error.mapped()
     //     })
     // };
-    const { body, headers } = req;
+    const { body } = req;
     const token = req.header('x-token') || '';
     const { password } = body;
     try {
@@ -87,6 +89,21 @@ const crearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const salt = bcryptjs_1.default.genSaltSync();
         body.password = bcryptjs_1.default.hashSync(password, salt);
         const usuario = yield usuario_1.default.create(body);
+        // await usuario.addRols([Rol,body.rol]);
+        // .then(body.rol => {        });
+        // const usuario = await Usuario.create({
+        //     nombre: body.nombre,
+        //     apellido: body.apellido,
+        //     email: body.email,
+        //     password: body.password,
+        //     imagen: body.imagen,
+        //     estado: body.estado,
+        //     google: body.google,
+        //     rol:{
+        //         id:body.rol,
+        //     },
+        //     {include: "Rol_menu"}
+        // });
         yield usuario.save();
         res.status(200).json({
             ok: true,

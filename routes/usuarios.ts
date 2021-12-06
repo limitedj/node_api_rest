@@ -25,16 +25,16 @@ router.post('/crear',[
  //    check('email','El email es obligatorio').normalizeEmail().isEmail().notEmpty(),
        check('password','El password es obligatorio').notEmpty(),
        check('password','El password debe tener mas de 6 digitos').isLength({min:6}),
-       check('rol','el rol no exite en la base de datos').notEmpty().custom(esRolValido),
+    //    check('rol','el rol no exite en la base de datos').notEmpty().custom(esRolValido),
        check('email','inconveniente con el email').notEmpty().custom(existeEmail).isEmail(), 
        validarCampos],
        crearUsuario);
 
 router.put('/:id',[
-    check('password','El password debe tener mas de 6 digitos').isLength({min:6}),
-    check('id').custom(existeId),    
+    // check('password','El password debe tener mas de 6 digitos').isLength({min:6}),
+    // check('id').custom(existeId),    
     check('rol').notEmpty().custom(esRolValido),
-    check('email').notEmpty().custom(existeEmail).isEmail(),
+    // check('email').notEmpty().custom(existeEmail).isEmail(),
 
     validarCampos], putUsuario);
 

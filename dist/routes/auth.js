@@ -8,10 +8,10 @@ const express_validator_1 = require("express-validator");
 const auth_1 = require("../controllers/auth");
 const validar_jwt_1 = __importDefault(require("../middlewares/validar-jwt"));
 const validar_campos_1 = require("../middlewares/validar_campos");
-const router = express_1.Router();
+const router = (0, express_1.Router)();
 router.post('/login', [
-    express_validator_1.check('email', 'El email es obligatorio y/o formato de no valido').isEmail(),
-    express_validator_1.check('password', 'El password es obligatorio').isLength({ min: 6 }),
+    (0, express_validator_1.check)('email', 'El email es obligatorio y/o formato de no valido').isEmail(),
+    (0, express_validator_1.check)('password', 'El password es obligatorio').isLength({ min: 6 }),
     validar_campos_1.validarCampos
 ], auth_1.login);
 router.get('/renew', validar_jwt_1.default, auth_1.revalidarToken);

@@ -32,8 +32,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 msg: 'Usuario / Password no son correctos - estado: false'
             });
         }
-        //Validar contraseña
-        // console.log(usuario.password);
+        // Validar contraseña
+        console.log(usuario.password);
         const validPassword = bcryptjs_1.default.compareSync(password, usuario.password);
         if (!validPassword) {
             return res.status(400).json({
@@ -42,7 +42,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         //Generar el JWT
         const uid = (usuario.id).toString();
-        const token = yield generarJWT_1.default(uid, usuario.nombre);
+        const token = yield (0, generarJWT_1.default)(uid, usuario.nombre);
         //    console.log(usuario.password);
         res.json({
             ok: true,
@@ -64,7 +64,7 @@ const revalidarToken = (req, res) => __awaiter(void 0, void 0, void 0, function*
     // Leer la base de datos
     const usuario = yield usuario_1.default.findByPk(uid);
     // Generar el JWT
-    const token = yield generarJWT_1.default(uid, usuario === null || usuario === void 0 ? void 0 : usuario.nombre);
+    const token = yield (0, generarJWT_1.default)(uid, usuario === null || usuario === void 0 ? void 0 : usuario.nombre);
     // const token = await generarJWT((req.uid), req.nombre);
     console.log(`${req.uid}  ${req.nombre} nuevo token generado = ${token}`);
     return res.json({

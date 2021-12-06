@@ -6,13 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
 const Usuario = connection_1.default.define('usuario', {
-    id: {
-        type: sequelize_1.DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+    // id:{
+    //     type: DataTypes.INTEGER,
+    //     autoIncrement: true,
+    //     primaryKey: true,
+    //     allowNull: false
+    // },
+    nombre: {
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    nombre: {
+    apellido: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
@@ -28,10 +32,6 @@ const Usuario = connection_1.default.define('usuario', {
     imagen: {
         type: sequelize_1.DataTypes.STRING,
     },
-    rol: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
     estado: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: true
@@ -39,20 +39,11 @@ const Usuario = connection_1.default.define('usuario', {
     google: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: true
-    }
-}
-//{
-// timestamps : false,
-//freezeTableName : true,  //How to make Sequelize use singular table names
-//tableName : 'usuarios',
-//}
-);
-// export interface UsuarioInput extends Optional<UsuarioInstance, 'id' > {};
-// export interface UsuarioOuput extends Required<UsuarioInstance> {};
-// Usuario.prototype.usuario = function() {
-//     const { id, email, password, ...usuario } = this.prototype();
-//     usuario.uid = id;
-//     return usuario;
-// }
+    },
+});
+// User.belongsToMany(Project, { as: 'Tasks', through: 'worker_tasks', foreignKey: 'userId' })
+// Project.belongsToMany(User, { as: 'Workers', through: 'worker_tasks', foreignKey: 'projectId' })
+// Usuario.belongsToMany(Rol, {through: 'Usuario_rol', foreignKey: 'usuario_id' })
+// Usuario.belongsToMany(Rol, {through: {model: Usuario_rol}});
 exports.default = Usuario;
 //# sourceMappingURL=usuario.js.map

@@ -26,8 +26,8 @@ export const login = async (req:Request,res:Response) => {
             });
         }
     
-        //Validar contraseña
-        // console.log(usuario.password);
+        // Validar contraseña
+        console.log(usuario.password);
         const validPassword = bcryptjs.compareSync( password, usuario.password);
         if ( !validPassword ){
             return res.status(400).json({

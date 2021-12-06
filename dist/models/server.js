@@ -15,15 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usuarios_1 = __importDefault(require("../routes/usuarios"));
 const auth_1 = __importDefault(require("../routes/auth"));
+const menus_1 = __importDefault(require("../routes/menus"));
+const roles_menus_1 = __importDefault(require("../routes/roles_menus"));
+const roles_1 = __importDefault(require("../routes/roles"));
+const usuarios_roles_1 = __importDefault(require("../routes/usuarios_roles"));
 const cors_1 = __importDefault(require("cors"));
 const connection_1 = __importDefault(require("../db/connection"));
+require('./asociaciones');
 class Server {
     constructor() {
         this.apiPaths = {
-            auth: "/api/auth",
-            usuarios: '/api/usuarios'
+            login: '/api/auth',
+            usuarios: '/api/usuarios',
+            roles: '/api/roles',
+            usuarios_roles: '/api/usuarios_roles',
+            menus: '/api/menus',
+            roles_menus: '/api/roles_menus'
         };
-        this.app = express_1.default();
+        this.app = (0, express_1.default)();
         this.port = process.env.PORT;
         //Metodos Iniciales
         this.dbConnection();
@@ -37,13 +46,14 @@ class Server {
                 console.log('Database online');
             }
             catch (error) {
-                throw new Error(error);
+                console.log(error);
+                // throw new Error(error);
             }
         });
     }
     middlewares() {
         //CORS
-        this.app.use(cors_1.default());
+        this.app.use((0, cors_1.default)());
         //LECTURA DEL BODY
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
@@ -51,13 +61,22 @@ class Server {
         this.app.use(express_1.default.static('public'));
     }
     routes() {
-        this.app.use(this.apiPaths.auth, auth_1.default),
-            this.app.use(this.apiPaths.usuarios, usuarios_1.default);
+        this.app.use(this.apiPaths.login, auth_1.default),
+            this.app.use(this.apiPaths.usuarios, usuarios_1.default),
+            this.app.use(this.apiPaths.roles, roles_1.default),
+            this.app.use(this.apiPaths.usuarios_roles, usuarios_roles_1.default),
+            this.app.use(this.apiPaths.menus, menus_1.default),
+            this.app.use(this.apiPaths.roles_menus, roles_menus_1.default);
     }
     listen() {
         this.app.listen(this.port, () => {
             console.log('Servidor corriendo en el puerto' + ' ' + this.port);
         });
+        // db.sync({alter: true}).then(()=> {
+        //     console.log('los modelos se sincronizaron con la tablas');
+        // }).catch(error => {
+        //     console.log('Se ha producido un error',error);
+        // })
     }
 }
 exports.default = Server;

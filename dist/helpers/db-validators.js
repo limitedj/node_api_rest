@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.exiteUsuarioPorId = exports.existeId = exports.existeEmail = exports.esRolValido = void 0;
-const role_1 = __importDefault(require("../models/role"));
+const rol_1 = __importDefault(require("../models/rol"));
 const usuario_1 = __importDefault(require("../models/usuario"));
 const esRolValido = (rol = '') => __awaiter(void 0, void 0, void 0, function* () {
-    const existeRol = yield role_1.default.findOne({ where: { codigo: rol } });
+    const existeRol = yield rol_1.default.findOne({ where: { codigo: rol } });
     if (!existeRol) {
         throw new Error(`El rol ${rol} no está registrado en la BD`);
     }
