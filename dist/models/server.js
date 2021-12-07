@@ -15,22 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usuarios_1 = __importDefault(require("../routes/usuarios"));
 const auth_1 = __importDefault(require("../routes/auth"));
-const menus_1 = __importDefault(require("../routes/menus"));
-const roles_menus_1 = __importDefault(require("../routes/roles_menus"));
-const roles_1 = __importDefault(require("../routes/roles"));
-const usuarios_roles_1 = __importDefault(require("../routes/usuarios_roles"));
 const cors_1 = __importDefault(require("cors"));
 const connection_1 = __importDefault(require("../db/connection"));
-require('./asociaciones');
 class Server {
     constructor() {
         this.apiPaths = {
-            login: '/api/auth',
-            usuarios: '/api/usuarios',
-            roles: '/api/roles',
-            usuarios_roles: '/api/usuarios_roles',
-            menus: '/api/menus',
-            roles_menus: '/api/roles_menus'
+            auth: "/api/auth",
+            usuarios: '/api/usuarios'
         };
         this.app = (0, express_1.default)();
         this.port = process.env.PORT;
@@ -42,12 +33,13 @@ class Server {
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield connection_1.default.authenticate();
+                // await db.authenticate();
+                yield connection_1.default.sync({ force: true });
                 console.log('Database online');
             }
             catch (error) {
-                console.log(error);
-                // throw new Error(error);
+                throw new Error(error);
+                // erros as string fue modificado por ronald, verificar si funciona
             }
         });
     }
@@ -61,22 +53,13 @@ class Server {
         this.app.use(express_1.default.static('public'));
     }
     routes() {
-        this.app.use(this.apiPaths.login, auth_1.default),
-            this.app.use(this.apiPaths.usuarios, usuarios_1.default),
-            this.app.use(this.apiPaths.roles, roles_1.default),
-            this.app.use(this.apiPaths.usuarios_roles, usuarios_roles_1.default),
-            this.app.use(this.apiPaths.menus, menus_1.default),
-            this.app.use(this.apiPaths.roles_menus, roles_menus_1.default);
+        this.app.use(this.apiPaths.auth, auth_1.default),
+            this.app.use(this.apiPaths.usuarios, usuarios_1.default);
     }
     listen() {
         this.app.listen(this.port, () => {
             console.log('Servidor corriendo en el puerto' + ' ' + this.port);
         });
-        // db.sync({alter: true}).then(()=> {
-        //     console.log('los modelos se sincronizaron con la tablas');
-        // }).catch(error => {
-        //     console.log('Se ha producido un error',error);
-        // })
     }
 }
 exports.default = Server;

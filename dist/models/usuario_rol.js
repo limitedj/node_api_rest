@@ -5,16 +5,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
-//Modelo de Roles
-const Usuario_rol = connection_1.default.define('usuarios_roles', {
-    estado: {
-        type: sequelize_1.DataTypes.BOOLEAN,
+const usuario_1 = __importDefault(require("./usuario"));
+const rol_1 = __importDefault(require("./rol"));
+;
+class UsuarioRol extends sequelize_1.Model {
+}
+UsuarioRol.init({
+    id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    usuario_id: {
+        type: sequelize_1.DataTypes.BIGINT,
         allowNull: false,
     },
+    rol_id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        allowNull: false,
+    },
+    estado: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        defaultValue: true,
+    }
 }, {
-    // timestamps : false,
-    freezeTableName: true,
-    tableName: 'usuarios_roles',
+    sequelize: connection_1.default,
+    paranoid: true,
+    tableName: 'usuarios_roles'
 });
-exports.default = Usuario_rol;
+usuario_1.default.belongsToMany(rol_1.default, { through: UsuarioRol, foreignKey: 'usuario_id' });
+rol_1.default.belongsToMany(usuario_1.default, { through: UsuarioRol, foreignKey: 'rol_id' });
+exports.default = UsuarioRol;
 //# sourceMappingURL=usuario_rol.js.map

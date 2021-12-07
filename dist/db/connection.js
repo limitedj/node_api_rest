@@ -8,8 +8,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const db = new sequelize_1.Sequelize(process.env.DB_NOMBRE, process.env.DB_USER, process.env.DB_PASSWORD, { host: process.env.DB_SERVER,
     dialect: process.env.DB_DIALECT,
-    port: process.env.DB_PORT,
+    port: 5434,
     //logging: false
-});
+ });
 exports.default = db;
 //# sourceMappingURL=connection.js.map

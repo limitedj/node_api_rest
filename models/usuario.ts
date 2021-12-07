@@ -41,7 +41,7 @@ class Usuario extends Model<UsuarioAttributes, UsuarioInput> implements UsuarioA
 
 Usuario.init({
     id:{
-        type:DataTypes.INTEGER.UNSIGNED,
+        type:DataTypes.BIGINT,
         autoIncrement: true,
         primaryKey: true,
     },

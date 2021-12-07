@@ -5,45 +5,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
-const Usuario = connection_1.default.define('usuario', {
-    // id:{
-    //     type: DataTypes.INTEGER,
-    //     autoIncrement: true,
-    //     primaryKey: true,
-    //     allowNull: false
-    // },
+;
+class Usuario extends sequelize_1.Model {
+}
+Usuario.init({
+    id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     nombre: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     apellido: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
         unique: true,
-        allowNull: false
     },
     password: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     imagen: {
         type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
     },
     estado: {
-        type: sequelize_1.DataTypes.BOOLEAN,
-        defaultValue: true
-    },
-    google: {
-        type: sequelize_1.DataTypes.BOOLEAN,
-        allowNull: true
-    },
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        defaultValue: true,
+    }
+}, {
+    sequelize: connection_1.default,
+    paranoid: true,
+    tableName: 'usuarios'
 });
-// User.belongsToMany(Project, { as: 'Tasks', through: 'worker_tasks', foreignKey: 'userId' })
-// Project.belongsToMany(User, { as: 'Workers', through: 'worker_tasks', foreignKey: 'projectId' })
-// Usuario.belongsToMany(Rol, {through: 'Usuario_rol', foreignKey: 'usuario_id' })
-// Usuario.belongsToMany(Rol, {through: {model: Usuario_rol}});
 exports.default = Usuario;
 //# sourceMappingURL=usuario.js.map

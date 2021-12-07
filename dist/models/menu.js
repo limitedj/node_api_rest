@@ -5,24 +5,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
-const Menu = connection_1.default.define('menus', {
+;
+class Menu extends sequelize_1.Model {
+}
+Menu.init({
+    id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     codigo: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     descripcion: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true
+        allowNull: false,
     },
-    url: {
+    estado: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true
-    },
+        allowNull: false,
+        defaultValue: true,
+    }
+}, {
+    sequelize: connection_1.default,
+    paranoid: true,
+    tableName: 'menus'
 });
 exports.default = Menu;
-// id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
-// codigo character varying NOT NULL,
-// menu_id integer,
-// url character varying,
 //# sourceMappingURL=menu.js.map

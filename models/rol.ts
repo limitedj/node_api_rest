@@ -36,7 +36,7 @@ class Rol extends Model<RolAttributes, RolInput> implements RolAttributes {
 
 Rol.init({
     id:{
-        type:DataTypes.INTEGER.UNSIGNED,
+        type:DataTypes.BIGINT,
         autoIncrement: true,
         primaryKey: true,
     },

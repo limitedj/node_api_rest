@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import bcryptjs from 'bcryptjs';
-import Usuario_rol from '../models/usuario_rol';
-import Rol from '../models/rol';
+import UsuarioRol from '../models/usuario_rol';
 
 
 //Obtener todos los Rol paginados
@@ -10,7 +9,7 @@ export const getUsuariosRolesPag = async (req: Request, res: Response) => {
 
     const {limite = 5, desde = 5} = req.query;
 
-    const roles = await Usuario_rol.findAndCountAll({
+    const roles = await UsuarioRol.findAndCountAll({
         // where: {...},
         // order: [...],
         limit: Number(limite),
@@ -28,7 +27,7 @@ export const getUsuariosRolesPag = async (req: Request, res: Response) => {
 
 export const getUsuariosRoles = async (req: Request, res: Response) => {
 
-    const rol = await Usuario_rol.findAll();
+    const rol = await UsuarioRol.findAll();
 
     res.json({ rol });
 
@@ -40,7 +39,7 @@ export const getUsuarioRol = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const rol = await Usuario_rol.findByPk(id);
+    const rol = await UsuarioRol.findByPk(id);
     
     if (rol) {
         res.json({ rol });
@@ -72,7 +71,7 @@ export const crearUsuariosRoles = async (req: Request, res: Response) => {
     // const {password} = body;
 
     try {
-        const existeUsuarioRol = await Usuario_rol.findOne({
+        const existeUsuarioRol = await UsuarioRol.findOne({
             where: {
                 usuario_id: body.usuario_id,
                 rol_id: body.rol_id
@@ -88,7 +87,7 @@ export const crearUsuariosRoles = async (req: Request, res: Response) => {
         // const salt = bcryptjs.genSaltSync();
         // body.password = bcryptjs.hashSync(password, salt);
 
-        const usuario_rol = await Usuario_rol.create(body);
+        const usuario_rol = await UsuarioRol.create(body);
         
         await usuario_rol.save();
 
@@ -127,7 +126,7 @@ export const putUsuariosRoles = async (req: Request, res: Response) => {
 
     try {
 
-        const usuario_rol = await Usuario_rol.findByPk(id, resto);
+        const usuario_rol = await UsuarioRol.findByPk(id, resto);
         if (!usuario_rol) {
             return res.status(404).json({
                 msg: 'No existe un usuario con el id ' + id
@@ -159,7 +158,7 @@ export const deleteUsuariosRoles = async (req: Request, res: Response, next: Nex
 
         const { id } = req.params;
 
-        const usuario_rol = await Usuario_rol.findByPk( id );
+        const usuario_rol = await UsuarioRol.findByPk( id );
 
         if (!usuario_rol) {
             return res.status(400).json({
