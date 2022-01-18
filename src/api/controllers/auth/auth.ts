@@ -3,8 +3,7 @@ import { Request, Response } from 'express';
 import bcryptjs from 'bcryptjs';
 import generarJWT from '../../helpers/generarJWT';
 import Usuario from '../../../db/models/usuario';
-
-
+import { googleVerify } from '../../helpers/google.verify';
 
 export const login = async (req:Request,res:Response) => {
 
@@ -78,6 +77,56 @@ export const revalidarToken = async(req:any, res:Response) => {
         email:usuario?.email,
         token
     })    
-   
+
+}
+
+export const googleSingIn = async(req:Request, res:Response)=>{
+
+    const googleToken = req.body.token;
+
+    try {
+
+        const {name, email, picture }  = await googleVerify(googleToken);
+
+        // verificar si ya existe el email
+
+        const usuarioDB =  await Usuario.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        let usuario;
+
+        if( !usuarioDB ){
+            usuario = new Usuario({
+                nombre: name,
+                email,
+                password:'@@@',
+                imagen: picture,
+                google: true,
+            })
+        } else {
+            // existe usuario
+            usuario = usuarioDB;
+            usuarioDB.google = true;
+        }
+        
+        res.json({
+            ok: true,
+            msg: 'Google Sign In',
+            googleToken,
+            name, email, picture
+        });
+    } catch (error) {
+        res.status(401).json({
+            ok: false,
+            msg: 'Token no es correcto'
+
+        })
+        
+    }
+    
+
 }
 

@@ -24,6 +24,7 @@ export interface UsuarioAttributes {
     password ?  : string;
     imagen ?    : string;
     estado ?    : boolean;
+    google ?    : boolean;
     createdAt?  : Date;
     updatedAt?  : Date;
     deletedAt?  : Date;
@@ -46,6 +47,7 @@ class Usuario extends Model<UsuarioAttributes, UsuarioInput> implements UsuarioA
         public password!: string;
         public imagen!  : string; // para campos que aceptan valores NULL | null
         public estado!  : boolean;
+        public google!  : boolean;
 
         // timestamps!
         public readonly createdAt! : Date;
@@ -100,9 +102,14 @@ Usuario.init({
         allowNull: false,
     },
     estado: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true,
+    },
+    google: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
     }
 },{
     sequelize: db,

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { login, revalidarToken } from '../controllers/auth/auth';
+import { login, revalidarToken, googleSingIn } from '../controllers/auth/auth';
 import validarJWT from '../middlewares/validar-jwt';
 import { validarCampos } from '../middlewares/validar_campos';
 
@@ -11,6 +11,11 @@ router.post('/login',[
     check('password','El password es obligatorio').isLength({min:6}),
     validarCampos], 
     login);
+
+    router.post('/google',[
+        check('token','El token de google es obligatorio').not().isEmpty(),
+        validarCampos], 
+        googleSingIn);    
 
 router.get('/renew', validarJWT, revalidarToken );
 
