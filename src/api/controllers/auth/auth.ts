@@ -65,8 +65,6 @@ export const revalidarToken = async(req:any, res:Response) => {
     // Generar el JWT
     const token = await generarJWT( uid, usuario?.nombre! );
 
-    // const token = await generarJWT((req.uid), req.nombre);
-
     console.log(`${req.uid}  ${req.nombre} nuevo token generado = ${token}`);
 
     return res.json({
@@ -77,18 +75,20 @@ export const revalidarToken = async(req:any, res:Response) => {
         email:usuario?.email,
         token
     })    
-
 }
 
 export const googleSingIn = async(req:Request, res:Response)=>{
 
     const googleToken = req.body.token;
 
+    console.log(` ESTE ES GOOGLE TOKEN "${googleToken}"`);
+
     try {
 
         const {name, email, picture }  = await googleVerify(googleToken);
 
         // verificar si ya existe el email
+        console.log(name,email,picture);
 
         const usuarioDB =  await Usuario.findOne({
             where: {
@@ -96,32 +96,53 @@ export const googleSingIn = async(req:Request, res:Response)=>{
             }
         });
 
-        let usuario;
+        let usuario:Usuario;
 
         if( !usuarioDB ){
-            usuario = new Usuario({
-                nombre: name,
-                email,
-                password:'@@@',
-                imagen: picture,
-                google: true,
-            })
+        // si no existe un usuario
+        usuario = new Usuario({
+                  nombre: name,
+                  email,
+                  password:'@@@',
+                  imagen: picture,
+                  google: true,
+        });
+        console.log('no existe en la base de datos');
+        
+            
         } else {
             // existe usuario
             usuario = usuarioDB;
-            usuarioDB.google = true;
+            usuario.google = true;
+            usuario.password = '@@@';
+            console.log('ya existe en la base de datos');    
+
         }
+
+        //guardar en la base de datos
+
+        // console.log(usuario);
+
+        // console.log(usuario.email, usuario.nombre, usuario.apellido)
+        
+        await usuario.save()
+        .catch( (error) => console.log(error) );
+
+        
+
+        const uid = (usuario.id).toString()
+
+        const token = await generarJWT( uid, name );
         
         res.json({
             ok: true,
-            msg: 'Google Sign In',
-            googleToken,
-            name, email, picture
+            token
         });
+
     } catch (error) {
         res.status(401).json({
             ok: false,
-            msg: 'Token no es correcto'
+            msg: 'Error inesperado'
 
         })
         

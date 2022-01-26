@@ -87,7 +87,7 @@ Usuario.init({
 
     apellido: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     email: {
         type: DataTypes.STRING,
@@ -95,11 +95,11 @@ Usuario.init({
     },
     password: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull:true,
     },
     imagen: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     estado: {
         type: DataTypes.BOOLEAN,

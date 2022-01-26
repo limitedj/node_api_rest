@@ -93,7 +93,9 @@ export const create = async (req: Request, res: Response) => {
 
     const token = req.header( 'x-token' ) || '' ;
 
-    const {password, rol} = body;
+    // const {password, rol} = body;
+
+    const {password} = body;
 
     try {
         const existeEmail = await Usuario.findOne({
@@ -111,8 +113,9 @@ export const create = async (req: Request, res: Response) => {
         const salt = bcryptjs.genSaltSync();
         body.password = bcryptjs.hashSync(password, salt);
             
-        const usuario = await Usuario.create(body);
-        await usuario.addRol(body.rol);
+        const usuario = await Usuario.create(body)
+        .catch( (error) => console.log(error) );;
+        // await usuario.addRol(body.rol);
 
 
         // const usuario = await Usuario.create(body);

@@ -12,7 +12,7 @@ router.post('/login',[
     validarCampos], 
     login);
 
-    router.post('/google',[
+    router.post('/login/google',[
         check('token','El token de google es obligatorio').not().isEmpty(),
         validarCampos], 
         googleSingIn);    
