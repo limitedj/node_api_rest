@@ -4,7 +4,11 @@ interface ListFilters {
 }
 
 export interface GetAllUsuariosFilters extends ListFilters {}
-export interface GetAllMenusFilters extends ListFilters {}
+
+
+export interface GetAllMenusFilters extends ListFilters {
+}
+
 export interface GetAllRolsFilters extends ListFilters {
     isPublished?: boolean
     isNotPublished?: boolean

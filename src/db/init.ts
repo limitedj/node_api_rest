@@ -1,12 +1,6 @@
-import Usuario from './models/usuario';
-import UsuarioRol from "./models/usuario_rol";
-import Rol from "./models/rol"
-import MenuRol from "./models/menu_rol";
-import Menu from "./models/menu";
+require('dotenv').config();
 
-
-require('dotenv').config()
-
+import { Usuario, Menu, Rol, MenuRol, UsuarioRol } from './models';
 
 const isDev = process.env.NODE_ENV === 'development'
 const isTest = process.env.NODE_ENV !== 'test'

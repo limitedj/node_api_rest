@@ -1,5 +1,5 @@
-import  Usuario  from "../../db/models/usuario";
-import  Rol  from "../../db/models/rol";
+import  Usuario  from "../../db/models/usuario/usuario";
+import  Rol  from "../../db/models/usuario/rol";
 
 
 export const esRolValido = async(rol = '')=>{

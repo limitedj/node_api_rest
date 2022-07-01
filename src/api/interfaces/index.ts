@@ -1,8 +1,8 @@
 
 import conexion from './env.interface';
-import Menu from './menu.interfaces';
-import Rol from './rol.intefaces';
-import Usuario from './usuarios.interfaces';
+import Menu from './usuario/menu.interfaces';
+import Rol from './usuario/rol.intefaces';
+import Usuario from './usuario/usuarios.interfaces';
 
 
 export {
