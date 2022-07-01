@@ -1,16 +1,17 @@
 import { Optional } from 'sequelize/types';
+import { CreateRolDTO } from './rol.dot';
 
 
 export type CreateMenuDTO = {
-
-    id             : number; 
-    codigo         : string;
-    descripcion    : string;
-    estado         : boolean;
+       
+    codigo          : string;
+    descripcion?    : string;
+    estado?         : boolean;
+    rol?            : CreateRolDTO[];
 
 };
 
-export type UpdateMenuDTO = Optional <CreateMenuDTO, 'id'>
+export type UpdateMenuDTO = Optional <CreateMenuDTO, 'codigo'>
 
 export type FilterMenuDTO = {
     isDeleted: boolean

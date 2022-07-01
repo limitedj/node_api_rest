@@ -3,8 +3,11 @@ import {isEmpty} from 'lodash'
 import Usuario from '../../models/usuario/usuario';
 
 
-import {UsuarioInput, UsuarioOuput} from '../../models'
+import { UsuarioInput, UsuarioOuput} from '../../models'
 import { GetAllUsuariosFilters } from '../types';
+import { Rol } from '../../models/';
+
+
 
 export const create = async (payload: UsuarioInput): Promise<UsuarioOuput> => {
     const usuario = await Usuario.create(payload);
@@ -54,10 +57,8 @@ export const deleteById = async (id: number): Promise<boolean> => {
 }
 
 export const getAll = async (filters?: GetAllUsuariosFilters): Promise<UsuarioOuput[]> => {
-    return Usuario.findAll({
-        where: {
-            ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
-        },
+    return Usuario.findAll({include: [ {model:Rol, attributes: ['descripcion'] }],
+        where: {...(filters?.isDeleted && {deletedAt: {[Op.not]: null}}) },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     })
 }

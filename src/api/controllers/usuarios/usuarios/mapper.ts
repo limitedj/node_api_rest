@@ -1,8 +1,9 @@
-import { UsuarioOuput } from "../../../../db/models";
-import { Usuario } from "../../../interfaces";
+import Usuario from '../../../interfaces/usuario/usuarios.interfaces';
+import { UsuarioOuput } from '../../../../db/models';
 
 
-export const toUsuario = (usuario: UsuarioOuput): Usuario => {
+
+export const toUsuario = (usuario: UsuarioOuput) : Usuario  => {
     return {
             id         : usuario.id       ,
             nombre     : usuario.nombre   ,
@@ -16,3 +17,4 @@ export const toUsuario = (usuario: UsuarioOuput): Usuario => {
             deletedAt  : usuario.deletedAt,
     }
 }
+

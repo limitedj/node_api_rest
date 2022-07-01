@@ -12,7 +12,8 @@ import {
     Optional 
 } from "sequelize";
 import db from "../../config";
-import Rol from "./rol";
+import Rol from './rol';
+
 
 // Estos son todos los atributos del modelo de usuario
 
@@ -66,7 +67,7 @@ class Usuario extends Model<UsuarioAttributes, UsuarioInput> implements UsuarioA
 
   // También puede pre-declarar posibles inclusiones, estas solo se completarán si
   // incluir activamente una relación.
-  public readonly projects?: Rol[]; // Tenga en cuenta que esto es opcional ya que solo se completa cuando se solicita explícitamente en el código
+//   public readonly projects?: Rol[]; // Tenga en cuenta que esto es opcional ya que solo se completa cuando se solicita explícitamente en el código
         
   public static associations: {
     projects: Association<Usuario, Rol>;

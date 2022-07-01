@@ -12,7 +12,7 @@ export const getAll = async (req: Request<GetAllRolsFilters>, res: Response) => 
        return res.status(200).send(results);
 }
 
-export const updateById = async (req: Request<UpdateRolDTO>, res: Response) => {
+export const updateById = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const payload:UpdateRolDTO = req.body;
     return mapper.toRol(await service.update(id, payload))

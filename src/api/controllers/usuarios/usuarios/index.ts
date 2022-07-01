@@ -12,7 +12,7 @@ export const getAll = async (req: Request<GetAllUsuariosFilters>, res: Response)
     return res.status(200).send(results);
 }
 
-export const updateById = async (req: Request<UpdateUsuarioDTO>, res: Response) => {
+export const updateById = async (req: Request, res: Response) => {
  const id = Number(req.params.id);
  const payload:UpdateUsuarioDTO = req.body;
  return mapper.toUsuario(await service.update(id, payload))

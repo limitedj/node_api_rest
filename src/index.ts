@@ -2,7 +2,10 @@ import express, { Application, Request, Response } from 'express';
 
 import cors from 'cors';
 import routes from './api/routes'
-import db from "./db/config";
+import db from './db/init';
+// import db from "./db/config";
+
+
 
 class Server {
 
@@ -14,27 +17,29 @@ class Server {
         this.port = process.env.PORT as string;
   
         //Metodos Iniciales
-        this.dbConnection();
+        // this.dbConnection();
+        this.db();
         this.middlewares();
         this.routes();
         this.msn();
         
     }
 
-    async dbConnection(){
+    db(){}; 
+    // async dbConnection(){
 
-        try {
-            await db.authenticate();
-            // await db.sync({ force: true });
-            console.log('Database online');
-        } catch (error) {
-            throw new Error( error as string );
+    //     try {
+    //         await db.authenticate();
+    //         // await db.sync({ force: true });
+    //         console.log('Database online');
+    //     } catch (error) {
+    //         throw new Error( error as string );
 
-            // erros as string fue modificado por ronald, verificar si funciona
-        }
+    //         // erros as string fue modificado por ronald, verificar si funciona
+    //     }
 
     
-    }
+    // }
 
     middlewares() {
         //CORS

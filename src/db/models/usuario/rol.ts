@@ -44,11 +44,11 @@ class Rol extends Model<RolAttributes, RolInput> implements RolAttributes {
         public readonly updatedAt! : Date;
         public readonly deletedAt! : Date;
 
-        public getUsuarios!: BelongsToManyGetAssociationsMixin<Usuario>; // ¡Tenga en cuenta las afirmaciones nulas!
-        public addUsuario!: BelongsToManyAddAssociationMixin<Usuario, number>;
-        public hasUsuario!: BelongsToManyHasAssociationMixin<Usuario, number>;
-        public countUsuarios!: BelongsToManyCountAssociationsMixin;
-        public createUsuario!: BelongsToManyCreateAssociationMixin<Usuario>;
+        // public getUsuarios!: BelongsToManyGetAssociationsMixin<Usuario>; // ¡Tenga en cuenta las afirmaciones nulas!
+        // public addUsuario!: BelongsToManyAddAssociationMixin<Usuario, number>;
+        // public hasUsuario!: BelongsToManyHasAssociationMixin<Usuario, number>;
+        // public countUsuarios!: BelongsToManyCountAssociationsMixin;
+        // public createUsuario!: BelongsToManyCreateAssociationMixin<Usuario>;
 
 }
 
