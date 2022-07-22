@@ -1,11 +1,9 @@
 import {Op} from 'sequelize'
-import {isEmpty} from 'lodash'
-import Usuario from '../../models/usuario/usuario';
 
-
-import { UsuarioInput, UsuarioOuput} from '../../models'
+import { Usuario, UsuarioInput, UsuarioOuput} from '../../models'
 import { GetAllUsuariosFilters } from '../types';
 import { Rol } from '../../models/';
+
 
 
 
@@ -57,7 +55,7 @@ export const deleteById = async (id: number): Promise<boolean> => {
 }
 
 export const getAll = async (filters?: GetAllUsuariosFilters): Promise<UsuarioOuput[]> => {
-    return Usuario.findAll({include: [ {model:Rol, attributes: ['descripcion'] }],
+    return Usuario.findAll({include: [ {model:Rol, attributes: ['id', 'descripcion']}],
         where: {...(filters?.isDeleted && {deletedAt: {[Op.not]: null}}) },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     })

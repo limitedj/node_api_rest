@@ -9,4 +9,6 @@ interface Rol {
 
 }
 
+
+
 export default Rol;
