@@ -24,7 +24,6 @@ export const create = async (req: Request, res: Response) => {
  return res.status(200).send(results);
 }
 
-
 export const getById = async (req: Request<Usuario>, res: Response) => {
  const id = Number(req.params.id);
  return mapper.toUsuario(await service.getById(id));

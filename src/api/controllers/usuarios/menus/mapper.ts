@@ -1,8 +1,8 @@
 
-import { MenuOuput } from "../../../../db/models";
+import { MenuOutput } from "../../../../db/models";
 import { Menu } from "../../../interfaces";
 
-export const toMenu = (menu: MenuOuput): Menu => {
+export const toMenu = (menu: MenuOutput): Menu => {
     return {
             id             : menu.id,
             codigo         : menu.codigo,

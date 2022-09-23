@@ -1,15 +1,17 @@
 import { Optional } from 'sequelize/types';
-import { CreateRolDTO } from './rol.dot';
+import { MenuOutput } from '../../../db/models';
 
+// export type CreateMenuDTO = Optional<RolOutput, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>
+export type CreateMenuDTO = Required<MenuOutput>
 
-export type CreateMenuDTO = {
+// export type CreateMenuDTO = {
        
-    codigo          : string;
-    descripcion?    : string;
-    estado?         : boolean;
-    rol?            : CreateRolDTO[];
+//     codigo          : string;
+//     descripcion?    : string;
+//     estado?         : boolean;
+//     // rol?            : CreateRolDTO[];
 
-};
+// };
 
 export type UpdateMenuDTO = Optional <CreateMenuDTO, 'codigo'>
 

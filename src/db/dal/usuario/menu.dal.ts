@@ -3,14 +3,14 @@ import {isEmpty} from 'lodash'
 
 import {Menu} from '../../models'
 import {GetAllMenusFilters} from '../types'
-import {MenuInput, MenuOuput} from '../../models'
+import {MenuInput, MenuOutput} from '../../models'
 
-export const create = async (payload: MenuInput): Promise<MenuOuput> => {
+export const create = async (payload: MenuInput): Promise<MenuOutput> => {
     const menu = await Menu.create(payload);
     return menu;
 }
 
-export const findOrCreate = async (payload: MenuInput): Promise<MenuOuput> => {
+export const findOrCreate = async (payload: MenuInput): Promise<MenuOutput> => {
     const [menu] = await Menu.findOrCreate({
         where: {
             codigo: payload.codigo
@@ -21,7 +21,7 @@ export const findOrCreate = async (payload: MenuInput): Promise<MenuOuput> => {
     return menu
 }
 
-export const update = async (id: number, payload: Partial<MenuInput>): Promise<MenuOuput> => {
+export const update = async (id: number, payload: Partial<MenuInput>): Promise<MenuOutput> => {
     const menu = await Menu.findByPk(id)
 
     if (!menu) {
@@ -42,7 +42,7 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedMenuCount
 }
 
-export const getById = async (id: number): Promise<MenuOuput> => {
+export const getById = async (id: number): Promise<MenuOutput> => {
     const menu = await Menu.findByPk(id)
 
     if (!menu) {
@@ -54,7 +54,7 @@ export const getById = async (id: number): Promise<MenuOuput> => {
 }
 
 
-export const getAll = async (filters?: GetAllMenusFilters): Promise<MenuOuput[]> => {
+export const getAll = async (filters?: GetAllMenusFilters): Promise<MenuOutput[]> => {
     // console.log(`Paso por el DAL isDeleted ${filters?.isDeleted} includeDeleted ${filters?.includeDeleted}`);
     return Menu.findAll(
     {

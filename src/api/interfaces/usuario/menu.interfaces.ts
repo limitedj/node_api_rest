@@ -1,6 +1,6 @@
 interface Menu {
 
-id              : number;
+id              : BigInt;
 codigo ?        : string;
 descripcion ?   : string;
 estado ?        : boolean;

@@ -2,10 +2,10 @@ import {kebabCase} from 'lodash'
 
 import * as menuDal from '../../dal/usuario/menu.dal'
 import {GetAllMenusFilters} from '../../dal/types'
-import {MenuInput, MenuOuput} from '../../models/'
+import {MenuInput, MenuOutput} from '../../models/'
 
 
-export const create = async (payload: MenuInput): Promise<MenuOuput> => {
+export const create = async (payload: MenuInput): Promise<MenuOutput> => {
     let slug = kebabCase(payload.codigo)
     // const slugExists = await menuDal.checkSlugExists(slug)
 
@@ -21,7 +21,7 @@ export const create = async (payload: MenuInput): Promise<MenuOuput> => {
 //     return res.status(200).send(result)
 
 
-export const update = async (id: number, payload: Partial<MenuInput>): Promise<MenuOuput> => {
+export const update = async (id: number, payload: Partial<MenuInput>): Promise<MenuOutput> => {
     if (payload.codigo) {
         let slug = kebabCase(payload.codigo)
         // const slugExists = await menuDal.checkSlugExists(slug)
@@ -31,19 +31,19 @@ export const update = async (id: number, payload: Partial<MenuInput>): Promise<M
     return menuDal.update(id, payload)
 }
 
-export const getById = (id: number): Promise<MenuOuput> => {
+export const getById = (id: number): Promise<MenuOutput> => {
     return menuDal.getById(id)
 }
 
 export const deleteById = (id: number): Promise<boolean> => {
     return menuDal.deleteById(id)
 }
-    (filters: GetAllMenusFilters): Promise<MenuOuput[]> => {
+    (filters: GetAllMenusFilters): Promise<MenuOutput[]> => {
 
         return menuDal.getAll(filters)
 };
 
-export const getAll = (filters: GetAllMenusFilters): Promise<MenuOuput[]> => {
+export const getAll = (filters: GetAllMenusFilters): Promise<MenuOutput[]> => {
     // console.log(`Paso por el Capa de Servicio isDeleted ${filters?.isDeleted} includeDeleted ${filters?.includeDeleted}`);
     return menuDal.getAll(filters)
 }

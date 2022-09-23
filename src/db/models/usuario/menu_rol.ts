@@ -1,36 +1,27 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, Attributes, Optional } from 'sequelize';
 import Rol from "./rol";
 import Menu from './menu';
 import db from "../../config";
 
 
-export interface MenuRolAttributes {
-    id              : number;
-    menu_id ?    : number;
-    rol_id ?        : number;
-    estado ?        : boolean;
-    createdAt?      : Date;
-    updatedAt?      : Date;
-    deletedAt?      : Date;
+export interface MenuRolInput extends Optional<Attributes<MenuRol>, 'id'> {};
 
-};
+export interface MenuRolOutput extends Attributes<MenuRol> {};
 
-export interface MenuRolInput extends Optional<MenuRolAttributes, 'id' > {}
+class MenuRol extends Model<InferAttributes<MenuRol>, InferCreationAttributes<MenuRol>> {
 
-export interface MenuRolOuput extends Required<MenuRolAttributes> {}
-
-
-class MenuRol extends Model<MenuRolAttributes, MenuRolInput> implements MenuRolAttributes {
-
-        public id!: number
-        public usuario_id!: number
-        public rol_id!: number
-        public estado!: boolean
+        declare id: CreationOptional<BigInt>
+        declare menu_id: bigint
+        declare rol_id: bigint
+        declare estado: boolean
         
         // timestamps!
-        public readonly createdAt! : Date;
-        public readonly updatedAt! : Date;
-        public readonly deletedAt! : Date;
+// createdAt can be undefined during creation
+        declare readonly createdAt : CreationOptional<Date>;
+// updatedAt can be undefined during creation
+        declare readonly updatedAt : CreationOptional<Date>;
+// deleteAt can be undefined during creation        
+        declare readonly deletedAt : CreationOptional<Date>;
 
 }
 
@@ -51,20 +42,14 @@ MenuRol.init({
     estado: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-    }
+    },
+    createdAt: {type: DataTypes.DATE, allowNull: true},
+    updatedAt: {type: DataTypes.DATE, allowNull: true},
+    deletedAt: {type: DataTypes.DATE, allowNull: true}
 },{
     sequelize: db,
     paranoid:true,
     tableName:'menus_roles'
-});
-
-Menu.belongsToMany(Rol,{
-    through:MenuRol, 
-    foreignKey:'menu_id'
-});
-Rol.belongsToMany(Menu,{
-    through:MenuRol, 
-    foreignKey:'rol_id'
 });
 
 export default MenuRol;

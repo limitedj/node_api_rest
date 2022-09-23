@@ -1,5 +1,5 @@
 interface Usuario_Rol {
-    id?         : number;
+    id?         : BigInt;
     nombre?     : string;
     apellido?   : string;
     email?      : string;

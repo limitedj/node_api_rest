@@ -1,34 +1,26 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { Mode } from "fs";
+import { DataTypes, Model, InferAttributes, Attributes, InferCreationAttributes, CreationOptional,Optional} from "sequelize";
 import db from "../../config";
 
+export interface MenuInput extends Optional<Attributes<Menu>, 'id'> {};
+// Model<InferAttributes<Menu>> {};
 
-export interface MenuAttributes {
-    id              : number;
-    codigo ?        : string;
-    descripcion ?   : string;
-    estado ?        : boolean;
-    createdAt?      : Date;
-    updatedAt?      : Date;
-    deletedAt?      : Date;
+export interface MenuOutput extends Attributes<Menu> {};
 
-};
+class Menu extends Model<InferAttributes<Menu>, InferCreationAttributes<Menu>> {
 
-export interface MenuInput extends Optional<MenuAttributes, 'id' > {}
-
-export interface MenuOuput extends Required<MenuAttributes> {}
-
-
-class Menu extends Model<MenuAttributes, MenuInput> implements MenuAttributes {
-
-        public id!: number;
-        public codigo!: string;
-        public descripcion!: string;
-        public estado!: boolean;
+        declare id: CreationOptional<BigInt>;
+        declare codigo: string;
+        declare descripcion: string;
+        declare estado: boolean;
 
         // timestamps!
-        public readonly createdAt! : Date;
-        public readonly updatedAt! : Date;
-        public readonly deletedAt! : Date;
+// createdAt can be undefined during creation
+        declare readonly createdAt : CreationOptional<Date>;
+// updatedAt can be undefined during creation
+        declare readonly updatedAt : CreationOptional<Date>;
+// deleteAt can be undefined during creation        
+        declare readonly deletedAt : CreationOptional<Date>;
 
 }
 
@@ -44,23 +36,20 @@ Menu.init({
     },
     descripcion: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     estado: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: true,
-    }
+    },
+    createdAt: {type: DataTypes.DATE, allowNull: true},
+    updatedAt: {type: DataTypes.DATE, allowNull: true},
+    deletedAt: {type: DataTypes.DATE, allowNull: true}
 },{
     sequelize: db,
     paranoid: true,
     tableName: 'menus'
 });
-
-// Menu.belongsToMany(Rol,{
-//     through:MenuRol, 
-//     foreignKey:'Menu_id'
-// });
-
 
 export default Menu;

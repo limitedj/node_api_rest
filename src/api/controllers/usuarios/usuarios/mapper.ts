@@ -1,9 +1,8 @@
 import Usuario from '../../../interfaces/usuario/usuarios.interfaces';
-import { UsuarioOuput } from '../../../../db/models';
+import { UsuarioOutput } from '../../../../db/models';
 
 
-
-export const toUsuario = (usuario: UsuarioOuput) : Usuario  => {
+export const toUsuario = (usuario: UsuarioOutput) : Usuario  => {
     return {
             id         : usuario.id       ,
             nombre     : usuario.nombre   ,

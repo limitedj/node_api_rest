@@ -102,10 +102,13 @@ export const googleSingIn = async(req:Request, res:Response)=>{
         // si no existe un usuario
         usuario = new Usuario({
                   nombre: name,
+                  apellido: '',
                   email,
                   password:'@@@',
                   imagen: picture,
                   google: true,
+                  estado: true,
+                  
         });
         console.log('no existe en la base de datos');
         

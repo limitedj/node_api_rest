@@ -3,14 +3,14 @@ import {isEmpty} from 'lodash'
 
 import Rol from '../../models/usuario/rol'
 import {GetAllRolsFilters} from '../types'
-import {RolInput, RolOuput} from '../../models'
+import {RolInput, RolOutput} from '../../models'
 
-export const create = async (payload: RolInput): Promise<RolOuput> => {
+export const create = async (payload: RolInput): Promise<RolOutput> => {
     const rol = await Rol.create(payload);
     return rol;
 }
 
-export const findOrCreate = async (payload: RolInput): Promise<RolOuput> => {
+export const findOrCreate = async (payload: RolInput): Promise<RolOutput> => {
     const [rol] = await Rol.findOrCreate({
         where: {
             codigo: payload.codigo
@@ -21,7 +21,7 @@ export const findOrCreate = async (payload: RolInput): Promise<RolOuput> => {
     return rol
 }
 
-export const update = async (id: number, payload: Partial<RolInput>): Promise<RolOuput> => {
+export const update = async (id: number, payload: Partial<RolInput>): Promise<RolOutput> => {
     const rol = await Rol.findByPk(id)
 
     if (!rol) {
@@ -33,7 +33,7 @@ export const update = async (id: number, payload: Partial<RolInput>): Promise<Ro
     return updatedRol
 }
 
-export const getById = async (id: number): Promise<RolOuput> => {
+export const getById = async (id: number): Promise<RolOutput> => {
     const rol = await Rol.findByPk(id)
 
     if (!rol) {
@@ -52,7 +52,7 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedRolCount
 }
 
-export const getAll = async (filters?: GetAllRolsFilters): Promise<RolOuput[]> => {
+export const getAll = async (filters?: GetAllRolsFilters): Promise<RolOutput[]> => {
     return Rol.findAll({
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})

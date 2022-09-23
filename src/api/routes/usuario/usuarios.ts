@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import {getAll, getById, create, updateById, deleteById }  from '../../controllers/usuarios/usuarios';
+import { getAll, getById, create, updateById, deleteById }  from '../../controllers/usuarios/usuarios';
 import { validarCampos } from '../../middlewares/validar_campos';
 import { existeEmail, 
          esRolValido, 

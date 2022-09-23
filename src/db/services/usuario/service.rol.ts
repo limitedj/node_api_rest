@@ -2,11 +2,11 @@ import {kebabCase} from 'lodash'
 
 import * as rolDal from '../../dal/usuario/rol.dal'
 import {GetAllRolsFilters} from '../../dal/types'
-import { RolOuput } from '../../models'
-// import {RolInput, RolOuput} from '../models/Rol'
+import { RolOutput } from '../../models'
+// import {RolInput, RolOutput} from '../models/Rol'
 import { RolInput } from '../../models/usuario/rol';
 
-export const create = async (payload: RolInput): Promise<RolOuput> => {
+export const create = async (payload: RolInput): Promise<RolOutput> => {
     let slug = kebabCase(payload.codigo)
     // const slugExists = await rolDal.checkSlugExists(slug)
 
@@ -15,7 +15,7 @@ export const create = async (payload: RolInput): Promise<RolOuput> => {
     return rolDal.create(payload)
 }
 
-export const update = async (id: number, payload: Partial<RolInput>): Promise<RolOuput> => {
+export const update = async (id: number, payload: Partial<RolInput>): Promise<RolOutput> => {
     if (payload.codigo) {
         let slug = kebabCase(payload.codigo)
         // const slugExists = await rolDal.checkSlugExists(slug)
@@ -25,7 +25,7 @@ export const update = async (id: number, payload: Partial<RolInput>): Promise<Ro
     return rolDal.update(id, payload)
 }
 
-export const getById = (id: number): Promise<RolOuput> => {
+export const getById = (id: number): Promise<RolOutput> => {
     return rolDal.getById(id)
 }
 
@@ -33,6 +33,6 @@ export const deleteById = (id: number): Promise<boolean> => {
     return rolDal.deleteById(id)
 }
 
-export const getAll = (filters: GetAllRolsFilters): Promise<RolOuput[]> => {
+export const getAll = (filters: GetAllRolsFilters): Promise<RolOutput[]> => {
     return rolDal.getAll(filters)
 }

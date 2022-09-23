@@ -1,48 +1,29 @@
-import {     
-    Sequelize,
-    Model,
-    ModelDefined,
-    DataTypes,
-    BelongsToManyGetAssociationsMixin,
-    BelongsToManyAddAssociationMixin,
-    BelongsToManyHasAssociationMixin,
-    Association,
-    BelongsToManyCountAssociationsMixin,
-    BelongsToManyCreateAssociationMixin,
-    Optional 
-} from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, Optional, CreationOptional, Attributes } from 'sequelize';
+
 import db from "../../config";
-import Usuario from "./usuario";
+import Usuario from './usuario';
+import UsuarioRol from './usuario_rol';
 
+export interface RolInput  extends Optional<Attributes<Rol>, 'id'> {};
 
+export interface RolOutput extends Attributes<Rol> {};
 
-export interface RolAttributes {
-    id              : number;
-    codigo ?        : string;
-    descripcion ?   : string;
-    estado ?        : boolean;
-    createdAt?      : Date;
-    updatedAt?      : Date;
-    deletedAt?      : Date;
+// class Rol extends Model<InferAttributes<Rol, { omit: never; }>, InferCreationAttributes<Rol>> {
 
-};
+class Rol extends Model<InferAttributes<Rol>, InferCreationAttributes<Rol>> {
 
-export interface RolInput extends Optional<RolAttributes, 'id' > {}
-
-export interface RolOuput extends Required<RolAttributes> {}
-
-
-class Rol extends Model<RolAttributes, RolInput> implements RolAttributes {
-
-        public id!: number;
-        public codigo!: string;
-        public descripcion!: string;
-        public estado!: boolean;
+        declare id: CreationOptional<BigInt>;
+        declare codigo: string;
+        declare descripcion: string;
+        declare estado: boolean;
 
         // timestamps!
-        public readonly createdAt! : Date;
-        public readonly updatedAt! : Date;
-        public readonly deletedAt! : Date;
+// createdAt can be undefined during creation
+        declare readonly createdAt : CreationOptional<Date>;
+// updatedAt can be undefined during creation
+        declare readonly updatedAt : CreationOptional<Date>;
+// deleteAt can be undefined during creation        
+        declare readonly deletedAt : CreationOptional<Date>;
 
         // public getUsuarios!: BelongsToManyGetAssociationsMixin<Usuario>; // ¡Tenga en cuenta las afirmaciones nulas!
         // public addUsuario!: BelongsToManyAddAssociationMixin<Usuario, number>;
@@ -71,21 +52,15 @@ Rol.init({
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: true,
-    }
+    },
+    createdAt: {type: DataTypes.DATE, allowNull: true},
+    updatedAt: {type: DataTypes.DATE, allowNull: true},
+    deletedAt: {type: DataTypes.DATE, allowNull: true}
 },{
     sequelize: db,
     paranoid:true,
     tableName: 'roles'
 });
 
-// Rol.belongsToMany(Usuario,{
-//     through:UsuarioRol, 
-//     foreignKey:'rol_id'
-// });
-
-// Rol.belongsToMany(Menu,{
-//     through:MenuRol, 
-//     foreignKey:'rol_id'
-// });
 
 export default Rol;

@@ -4,7 +4,7 @@ import * as mapper from './mapper'
 import * as service from '../../../../db/services/usuario/service.rol'
 import { CreateRolDTO, UpdateRolDTO } from '../../../dto/usuario/rol.dot';
 import { GetAllRolsFilters } from '../../../../db/dal/types'
-import { RolOuput } from '../../../../db/models/usuario/rol';
+import { RolOutput } from '../../../../db/models';
 
 export const getAll = async (req: Request<GetAllRolsFilters>, res: Response) => {
        const filters = req.query

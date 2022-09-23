@@ -1,9 +1,9 @@
 
-import { RolOuput } from "../../../../db/models";
+import { RolOutput } from "../../../../db/models";
 import { Rol } from '../../../interfaces'
 
 
-export const toRol = (rol: RolOuput): Rol => {
+export const toRol = (rol: RolOutput): Rol => {
     return {
             id          : rol.id       ,
             codigo      : rol.codigo   ,

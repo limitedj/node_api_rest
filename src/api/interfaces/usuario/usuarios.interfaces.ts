@@ -1,5 +1,5 @@
-export interface Usuario {
-    id          : number;
+interface Usuario {
+    id          : BigInt;
     nombre?     : string;
     apellido?   : string;
     email?      : string;
@@ -12,30 +12,32 @@ export interface Usuario {
    
 }
 
-interface RolDTO {
-    id              : number;
-    codigo ?        : string;
-    descripcion ?   : string;
-    estado ?        : boolean;
-    createdAt       : Date;
-    updatedAt       : Date;
-    deletedAt?      : Date;
-}
+export default Usuario;
 
-export interface UsuarioDTO {
-    id          : number;
-    nombre?     : string;
-    apellido?   : string;
-    email?      : string;
-    password?   : string;
-    imagen?     : string;
-    estado?     : boolean;
-    rol?        : RolDTO[];
-    createdAt   : Date;
-    updatedAt   : Date;
-    deletedAt?  : Date;
+// interface RolDTO {
+//     id              : number;
+//     codigo ?        : string;
+//     descripcion ?   : string;
+//     estado ?        : boolean;
+//     createdAt       : Date;
+//     updatedAt       : Date;
+//     deletedAt?      : Date;
+// }
+
+// export interface UsuarioDTO {
+//     id          : number;
+//     nombre?     : string;
+//     apellido?   : string;
+//     email?      : string;
+//     password?   : string;
+//     imagen?     : string;
+//     estado?     : boolean;
+//     rol?        : RolDTO[];
+//     createdAt   : Date;
+//     updatedAt   : Date;
+//     deletedAt?  : Date;
    
-}
+// }
 
 // type Genre = 'Post-punk' | 'Trip-hop' | 'Rock' | 'Rap' | 'Electronic' | 'Pop';
 

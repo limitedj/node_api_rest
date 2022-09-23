@@ -1,37 +1,30 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import {  DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, Attributes, Optional } 
+from "sequelize";
 import db from "../../config";
 
 import Rol from "./rol";
 import Usuario from './usuario';
 
 
-export interface UsuarioRolAttributes {
-    id              : number;
-    usuario_id ?    : number;
-    rol_id ?        : number;
-    estado ?        : boolean;
-    createdAt?      : Date;
-    updatedAt?      : Date;
-    deletedAt?      : Date;
 
-};
+export interface UsuarioRolInput extends Optional<Attributes<UsuarioRol>, 'id'> {};
 
-export interface UsuarioRolInput extends Optional<UsuarioRolAttributes, 'id' > {}
+export interface UsuarioRolOutput extends Attributes<UsuarioRol> {};
 
-export interface UsuarioRolOuput extends Required<UsuarioRolAttributes> {}
+class UsuarioRol extends Model<InferAttributes<UsuarioRol>, InferCreationAttributes<UsuarioRol>> {
 
-
-class UsuarioRol extends Model<UsuarioRolAttributes, UsuarioRolInput> implements UsuarioRolAttributes {
-
-        public id!: number;
-        public usuario_id!: number;
-        public rol_id!: number;
-        public estado!: boolean;
+        declare id: CreationOptional<BigInt>;
+        declare usuario_id: number;
+        declare rol_id: number;
+        declare estado: boolean;
 
         // timestamps!
-        public readonly createdAt! : Date;
-        public readonly updatedAt! : Date;
-        public readonly deletedAt! : Date;
+// createdAt can be undefined during creation
+        declare readonly createdAt : CreationOptional<Date>;
+// updatedAt can be undefined during creation
+        declare readonly updatedAt : CreationOptional<Date>;
+// deleteAt can be undefined during creation        
+        declare readonly deletedAt : CreationOptional<Date>;
 
 }
 
@@ -52,21 +45,14 @@ UsuarioRol.init({
     estado: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-    }
+    },
+    createdAt: {type: DataTypes.DATE, allowNull: true},
+    updatedAt: {type: DataTypes.DATE, allowNull: true},
+    deletedAt: {type: DataTypes.DATE, allowNull: true}
 },{
     sequelize: db,
     paranoid:true,
     tableName:'usuarios_roles'
-});
-
-Usuario.belongsToMany(Rol,{
-    through:UsuarioRol, 
-    foreignKey:'usuario_id'
-});
-
-Rol.belongsToMany(Usuario,{
-    through:UsuarioRol, 
-    foreignKey:'rol_id'
 });
 
 export default UsuarioRol;
