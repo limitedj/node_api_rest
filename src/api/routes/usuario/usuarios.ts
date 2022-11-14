@@ -18,19 +18,16 @@ usuarioRouters.post('/crear',[
        validarJWT,
     //    esAdminRole,
        check('nombre','El nombre es obligatorio').notEmpty(),
- //    check('email','El email es obligatorio').normalizeEmail().isEmail().notEmpty(),
+       check('email','El email es obligatorio').normalizeEmail().isEmail().notEmpty().custom(existeEmail),
        check('password','El password es obligatorio').notEmpty(),
        check('password','El password debe tener mas de 6 digitos').isLength({min:6}),
-    //    check('rol','el rol no exite en la base de datos').notEmpty().custom(esRolValido),
-       check('email','inconveniente con el email').notEmpty().custom(existeEmail).isEmail(), 
+      //  check('rol','el rol no exite en la base de datos').notEmpty().custom(esRolValido),
        validarCampos],
        create);
-
+      //  
        usuarioRouters.put('/:id',[
-    // check('password','El password debe tener mas de 6 digitos').isLength({min:6}),
     // check('id').custom(existeId),    
-    check('rol').notEmpty().custom(esRolValido),
-    // check('email').notEmpty().custom(existeEmail).isEmail(),
+       check('rol').notEmpty().custom(esRolValido),
 
     validarCampos], updateById);
 

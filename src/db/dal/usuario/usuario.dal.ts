@@ -4,21 +4,22 @@ import { Usuario, UsuarioInput, UsuarioOutput} from '../../models'
 import { GetAllUsuariosFilters } from '../types';
 import { Rol } from '../../models/';
 import bcryptjs from 'bcryptjs';
-import { error } from 'console';
+
 
 export const create = async (payload: UsuarioInput): Promise<UsuarioOutput> => {
 
-        const existeEmail = await Usuario.findOne({
-                    where: {
-                        email: payload.email
-                    }
-                })
+        // const existeEmail = await Usuario.findOne({
+        //             where: {
+        //                 email: payload.email
+        //             }
+        //         })
 
-                if (existeEmail) {
-                    // @todo throw custom error
-                    throw new Error(`Ya existe el usuario con el email ${payload.email}`)
-                }
+        //         if (existeEmail) {
+        //             // @todo throw custom error
+        //             throw new Error(`El email ${payload.email} ya esta registrado en la base de datos`);
+        //         }
         
+            
         const salt = bcryptjs.genSaltSync();
         payload.password = bcryptjs.hashSync(payload.password, salt);
 

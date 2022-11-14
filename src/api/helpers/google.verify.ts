@@ -1,7 +1,8 @@
-import { payload } from '../interfaces/borrame_payload';
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_ID);
-export const googleVerify = async ( token:string ) => {
+
+const googleVerify = async ( token:string ) => {
+ 
   const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_ID,  
@@ -12,7 +13,7 @@ export const googleVerify = async ( token:string ) => {
   });
   
   const payload = ticket.getPayload();
-  const userid = payload['sub'];
+  // const userid = payload['sub'];
 
   console.log(payload);
 
@@ -21,3 +22,4 @@ export const googleVerify = async ( token:string ) => {
   return { name, email, picture }
 }
 
+export default googleVerify; 

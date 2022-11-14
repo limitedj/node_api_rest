@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { login, revalidarToken, googleSingIn } from '../../controllers/usuarios/auth/auth';
+import { login, renewToken, googleSingIn } from '../../controllers/usuarios/auth/auth';
 import validarJWT from '../../middlewares/validar-jwt';
 import { validarCampos } from '../../middlewares/validar_campos';
 
@@ -17,7 +17,7 @@ authRouters.post('/login',[
         validarCampos], 
         googleSingIn);    
 
-authRouters.get('/renew', validarJWT, revalidarToken );
+authRouters.get('/renew', validarJWT, renewToken );
 
 export default authRouters;
 

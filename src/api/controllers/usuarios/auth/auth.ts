@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 // import Usuario from '../../../db/models'; 
 import bcryptjs from 'bcryptjs';
 import generarJWT from '../../../helpers/generarJWT';
-import Usuario from '../../../../db/models/usuario/usuario';
-import { googleVerify } from '../../../helpers/google.verify';
+import { Usuario } from '../../../../db/models/usuario';
+import googleVerify from '../../../helpers/google.verify';
 
 export const login = async (req:Request,res:Response) => {
 
@@ -11,6 +11,7 @@ export const login = async (req:Request,res:Response) => {
 
    try {
         // Verificar si el email existe
+
         const usuario =  await Usuario.findOne({where: {email: email}});
 
         if ( !usuario ) {
@@ -52,10 +53,9 @@ export const login = async (req:Request,res:Response) => {
                 msg: 'Hable con el Administrador'
             }); 
    }
-
 }
 
-export const revalidarToken = async(req:any, res:Response) => {
+export const renewToken = async(req:any, res:Response) => {
 
     const { uid } = req;
 
@@ -67,14 +67,18 @@ export const revalidarToken = async(req:any, res:Response) => {
 
     console.log(`${req.uid}  ${req.nombre} nuevo token generado = ${token}`);
 
+    if( usuario ){
     return res.json({
-        ok:true,
-        msg: 'Renew',
-        uid: usuario?.id,
-        nombre:usuario?.nombre,
-        email:usuario?.email,
-        token
+        ok : true,
+        token,
+          nombre : usuario.nombre,
+        apellido : usuario.apellido,
+           email : usuario.email,
+          imagen : usuario.imagen,
+          google : usuario.google,
+              id : usuario.id
     })    
+  }
 }
 
 export const googleSingIn = async(req:Request, res:Response)=>{
@@ -82,6 +86,7 @@ export const googleSingIn = async(req:Request, res:Response)=>{
     const googleToken = req.body.token;
 
     console.log(` ESTE ES GOOGLE TOKEN "${googleToken}"`);
+    // console.log( JSON.stringify({ token : req.body.token }));
 
     try {
 
@@ -112,26 +117,15 @@ export const googleSingIn = async(req:Request, res:Response)=>{
         });
         console.log('no existe en la base de datos');
         
-            
         } else {
             // existe usuario
             usuario = usuarioDB;
             usuario.google = true;
             usuario.password = '@@@';
             console.log('ya existe en la base de datos');    
-
         }
 
-        //guardar en la base de datos
-
-        // console.log(usuario);
-
-        // console.log(usuario.email, usuario.nombre, usuario.apellido)
-        
-        await usuario.save()
-        .catch( (error) => console.log(error) );
-
-        
+        await usuario.save().catch( (error) => console.log(error) );
 
         const uid = (usuario.id).toString()
 
@@ -150,7 +144,6 @@ export const googleSingIn = async(req:Request, res:Response)=>{
         })
         
     }
-    
 
 }
 

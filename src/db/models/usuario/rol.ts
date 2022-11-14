@@ -1,36 +1,55 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, Optional, CreationOptional, Attributes } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, Optional, 
+    CreationOptional, Attributes, 
+    BelongsToManyGetAssociationsMixin, 
+    BelongsToManyAddAssociationMixin, 
+    BelongsToManyHasAssociationMixin, 
+    BelongsToManyCountAssociationsMixin, 
+    BelongsToManyCreateAssociationMixin, 
+    BelongsToManyCreateAssociationMixinOptions } from 'sequelize';
 
 import db from "../../config";
-import Usuario from './usuario';
-import UsuarioRol from './usuario_rol';
 
-export interface RolInput  extends Optional<Attributes<Rol>, 'id'> {};
+interface RolAttributes {
+               id  : BigInt;
+           codigo  : string;
+      descripcion? : string;
+           estado  : boolean;
+        createdAt? : Date;
+        updatedAt? : Date;
+        deletedAt? : Date;
+}
 
-export interface RolOutput extends Attributes<Rol> {};
 
-// class Rol extends Model<InferAttributes<Rol, { omit: never; }>, InferCreationAttributes<Rol>> {
+export interface RolInput  extends Optional<RolAttributes, 'id' > {};
 
-class Rol extends Model<InferAttributes<Rol>, InferCreationAttributes<Rol>> {
+export interface RolOutput extends Required<RolAttributes> {};
 
-        declare id: CreationOptional<BigInt>;
+// class Rol extends Model<InferAttributes<Rol, { omit: 'name' | 'projects' }>, InferCreationAttributes<Rol>> {
+
+    // class Rol extends Model<RolAttributes, RolInput> {
+
+
+
+class Rol extends Model<RolAttributes,RolInput> {
+
+        declare id: BigInt;
         declare codigo: string;
-        declare descripcion: string;
+        declare descripcion: string;;
         declare estado: boolean;
 
         // timestamps!
 // createdAt can be undefined during creation
-        declare readonly createdAt : CreationOptional<Date>;
+        declare readonly createdAt : Date;
 // updatedAt can be undefined during creation
-        declare readonly updatedAt : CreationOptional<Date>;
+        declare readonly updatedAt : Date;
 // deleteAt can be undefined during creation        
-        declare readonly deletedAt : CreationOptional<Date>;
+        declare readonly deletedAt : Date;
 
-        // public getUsuarios!: BelongsToManyGetAssociationsMixin<Usuario>; // ¡Tenga en cuenta las afirmaciones nulas!
-        // public addUsuario!: BelongsToManyAddAssociationMixin<Usuario, number>;
-        // public hasUsuario!: BelongsToManyHasAssociationMixin<Usuario, number>;
-        // public countUsuarios!: BelongsToManyCountAssociationsMixin;
-        // public createUsuario!: BelongsToManyCreateAssociationMixin<Usuario>;
-
+        // declare getUsuarios: BelongsToManyGetAssociationsMixin<Usuario>; // ¡Tenga en cuenta las afirmaciones nulas
+        // declare addUsuario: BelongsToManyAddAssociationMixin<Usuario, number>;
+        // declare hasUsuario: BelongsToManyHasAssociationMixin<Usuario, number>;
+        // declare countUsuarios: BelongsToManyCountAssociationsMixin;
+        // declare createUsuario: BelongsToManyCreateAssociationMixin<Usuario>;
 }
 
 
@@ -64,3 +83,7 @@ Rol.init({
 
 
 export default Rol;
+
+
+//-------
+
